@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -7,6 +9,8 @@ public class Main {
         progammingbook[2] = new ProgrammingBook(103,"nameBook3",12000,"Khaitrinh","PHP","AJAX");
         progammingbook[3] = new ProgrammingBook(104,"nameBook4",13000,"Khaitrinh","C++","Security");
         progammingbook[4] = new ProgrammingBook(105,"nameBook5",15500,"Khaitrinh","PYTHON","Compilers");
+
+        Book[] b = {};
         System.out.println("Danh sách Programmingbooks : ");
         for (Book i: progammingbook) {
             System.out.println(i);
@@ -28,24 +32,61 @@ public class Main {
         // Tổng tiền sách Programmingbook và FictionBook:
 
         double tolalPrice = 0;
-        double totalPriceProbook = 0;
         for (Book i: progammingbook) {
             tolalPrice += i.getPrice();
-            totalPriceProbook += i.getPrice();
         }
         for (Book j: fictionbook) {
             tolalPrice += j.getPrice();
         }
-        System.out.println("\n"+"Tổng tiền : "+tolalPrice+ " VND");
+        System.out.println("\n"+"Tổng tiền : "+ tolalPrice + " VND");
 
         // Số sách Programmingbook có language là "java" :
 
-        int count = 0;
+        int countJava = 0;
+        int countFiction = 0;
+        int count100 = 0;
         for (ProgrammingBook i: progammingbook) {
-            if ( i.getLanguage() == "Java")
-                count++;
+            Object value = null;
+            if (value instanceof ProgrammingBook) {
+               if ( i.getLanguage() == "Java")
+                   countJava++;
+           }else if (value instanceof FictionBook) {
+               if (((FictionBook) value).getCategory().equals("Fiction1")){
+                   countFiction++;
+               }
+               if (((FictionBook) value).getPrice() > 100000)
+                   count100++;
+           }
         }
-        System.out.println("\n"+"Số sách java : "+count+ " quyển");
+        System.out.println("\n"+"Total Java books : "+ countJava + " books");
+        System.out.println("\n" +"Total Fiction books have category 'Fiction 1 is: " + countFiction + "books" );
+        System.out.println("\n" + "Total fiction books have a price above 100.000 is" + count100);
+
+
+        Scanner sc = new Scanner(System.in);
+        String search;
+        System.out.println("Enter the name of the book you check the price");
+        System.out.println("Enter 'Exit' to quit the program");
+        do {
+            search = sc.nextLine();
+            boolean check = false;
+            for (Book book : b) {
+                if (search.equals(book.getName())) {
+                    check = true;
+                    break;
+                }
+            }
+            if (check) {
+                for (Book book : b) {
+                    if (search.equals(book.getName())) {
+                        System.out.println("The price of the book is" + book.getName() + " là: " + book.getPrice());
+                        break;
+                    }
+                }
+            }
+            else
+                System.out.println("Can't find your book");
+        }while (!search.equals("Exit")) ;
 
     }
 }
